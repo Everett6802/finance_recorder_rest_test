@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!--
+  <parent>
+  	<groupId>com.price.finance_recorder</groupId>
+  	<artifactId>finance_recorder_parent</artifactId>
+  	<version>1.0.0</version>
+  	<relativePath>../finance_recorder_parent/pom.xml</relativePath>
+  </parent>
+  -->
+  <groupId>com.price.finance_recorder</groupId>
+  <artifactId>finance_recorder_rest</artifactId>
+  <version>1.0.0</version>
+  <packaging>war</packaging>
+
+  <!--<name>finance_recorder_rest Maven Webapp</name>-->
+  <url>http://maven.apache.org</url>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+  	  <artifactId>junit</artifactId>
+  	  <version>4.11</version>
+  	  <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.price.finance_recorder</groupId>
+      <artifactId>finance_recorder_lib</artifactId>
+      <version>2.0.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.bundles/jaxrs-ri -->
+    <dependency>
+      <groupId>org.glassfish.jersey.bundles</groupId>
+      <artifactId>jaxrs-ri</artifactId>
+      <version>2.25</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-moxy -->
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-moxy</artifactId>
+      <version>2.25</version>
+    </dependency>
+
+    <!-- Hibernate Dependencies -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.8.Final</version>
+    </dependency>
+
+	<!-- 
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <version>3.5.6-Final</version>
+    </dependency>
+     -->
+
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>5.4.0.Final</version>
+    </dependency>
+
+    <!-- MySQL Dependencies -->
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.41</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>4.3.7.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.3.1.Final</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-c3p0</artifactId>
+      <version>5.2.12.Final</version>
+    </dependency>
+
+    <!-- Slf4j Dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <finalName>finance_recorder_rest</finalName>
+  	<plugins>
+      <plugin>
+  		<artifactId>maven-compiler-plugin</artifactId>
+  		<version>3.3</version>
+  		<configuration>
+  		  <source>1.8</source>
+  		  <target>1.8</target>
+  		</configuration>
+  	  </plugin>
+  		
+  	  <plugin>
+  		<artifactId>maven-war-plugin</artifactId>
+  		<version>2.6</version>
+  		<configuration>
+  		  <failOnMissingWebXml>false</failOnMissingWebXml>
+  		</configuration> 
+  	  </plugin>
+
+  	</plugins>
+  </build>
+</project>
