@@ -36,10 +36,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AuthenticationException(ExceptionType.AUTHENTICATION_FAILED.getExceptionMessage());
         }
         
-        if(!storedUser.getEmailVerificationStatus())
-        {
-            throw new EmailVerificationException(ExceptionType.EMAIL_ADDRESS_NOT_VERIFIED.getExceptionMessage());
-        }
+//        if(!storedUser.getEmailVerificationStatus())
+//        {
+//            throw new EmailVerificationException(ExceptionType.EMAIL_ADDRESS_NOT_VERIFIED.getExceptionMessage());
+//        }
 
         String encryptedPassword = null;
 
@@ -84,6 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         returnValue = encryptedAccessTokenBase64Encoded.substring(tokenLength / 2, tokenLength);
 
         userProfile.setToken(tokenToSaveToDatabase);
+        // Update the token into database
         updateUserProfile(userProfile);
 
         return returnValue;

@@ -9,6 +9,8 @@ public enum ExceptionType
     NO_RECORD_FOUND("Record with provided id is not found"),
     AUTHENTICATION_FAILED("Authentication failed"),
     EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified"),
+    COULD_NOT_UPDATE_RECORD("Could not update record"),
+    COULD_NOT_DELETE_RECORD("Could not delete record"),
     INTERNAL_SERVER_ERROR("Internal Server Error");
 	
 	private String exceptionMessage;

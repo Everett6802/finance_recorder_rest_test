@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.price.finance_recorder_rest.common.UserProfileUtils;
 import com.price.finance_recorder_rest.exception.CouldNotCreateRecordException;
+import com.price.finance_recorder_rest.exception.CouldNotUpdateRecordException;
+import com.price.finance_recorder_rest.exception.EmailVerificationException;
 import com.price.finance_recorder_rest.exception.ExceptionType;
 import com.price.finance_recorder_rest.exception.NoRecordFoundException;
 import com.price.finance_recorder_rest.persistence.MySQLDAO;
@@ -17,7 +19,19 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
         this.database = new MySQLDAOImpl();
     }
-	
+
+    private UserDTO getUserByEmailToken(String token) {
+        UserDTO returnValue;
+        try {
+            this.database.openConnection();
+            returnValue = this.database.getUserByEmailToken(token);
+
+        } finally {
+            this.database.closeConnection();
+        }
+        return returnValue;
+    }
+
 	@Override
 	public UserDTO createUser(UserDTO user) {
         UserDTO returnValue = null;
@@ -47,6 +61,9 @@ public class UserServiceImpl implements UserService {
         // Record data into a database 
         returnValue = this.saveUser(user);
 
+//        verifyEmail(user.getToken());
+
+     // Return back the user profile
         return returnValue;
 	}
 
@@ -119,4 +136,75 @@ public class UserServiceImpl implements UserService {
 
         return users;
     }
+
+    @Override
+    public void updateUserDetails(UserDTO userDetails) {
+        try {
+            // Connect to database 
+            this.database.openConnection();
+            // Update User Details
+            this.database.updateUser(userDetails);
+
+        } catch (Exception ex) {
+            throw new CouldNotUpdateRecordException(ex.getMessage());
+        } finally {
+            this.database.closeConnection();
+        }
+    }
+
+    @Override
+    public void deleteUser(UserDTO userDto) {
+//        try {
+//            this.database.openConnection();
+//            this.database.deleteUser(userDto);
+//        } catch (Exception ex) {
+//            throw new CouldNotDeleteRecordException(ex.getMessage());
+//        } finally {
+//            this.database.closeConnection();
+//        }
+//
+//        // Verify that user is deleted
+//        try {
+//            userDto = getUser(userDto.getUserId());
+//        } catch (NoRecordFoundException ex) {
+//            userDto = null;
+//        }
+//
+//        if (userDto != null) {
+//            throw new CouldNotDeleteRecordException(
+//                    ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
+//        }
+    }
+
+    @Override
+    public boolean verifyEmail(String token) {
+        boolean returnValue = false;
+
+        if (token == null || token.isEmpty()) {
+            throw new EmailVerificationException(ExceptionType.MISSING_REQUIRED_FIELD.getExceptionMessage());
+        }
+
+        try {
+
+            UserDTO storedUserRecord = getUserByEmailToken(token);
+
+            if (storedUserRecord == null) {
+                return returnValue;
+            }
+
+            // Update user Record
+            storedUserRecord.setEmailVerificationStatus(true);
+            storedUserRecord.setEmailVerificationToken(null);
+
+            updateUserDetails(storedUserRecord);
+
+            returnValue = true;
+
+        } catch (Exception ex) {
+            throw new EmailVerificationException(ex.getMessage());
+        }
+
+        return returnValue;
+    }
+
 }

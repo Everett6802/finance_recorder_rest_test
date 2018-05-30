@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.BeanUtils;
 
+import com.price.finance_recorder_rest.namebinding.Secured;
 import com.price.finance_recorder_rest.service.UserDTO;
 import com.price.finance_recorder_rest.service.UserService;
 import com.price.finance_recorder_rest.service.UserServiceImpl;
@@ -51,6 +52,7 @@ public class UserEntryPoint
 		return returnValue;
 	}
 
+    @Secured
     @GET
     @Path("/{id}")
     @Produces({ MediaType.APPLICATION_JSON,  MediaType.APPLICATION_XML} )
