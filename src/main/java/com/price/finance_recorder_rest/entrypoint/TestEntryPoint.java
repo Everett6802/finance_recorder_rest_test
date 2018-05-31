@@ -10,8 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.price.finance_recorder_rest.exception.FinanceRecorderTestException;
-
 
 @Path("/test")
 public class TestEntryPoint

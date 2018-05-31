@@ -18,7 +18,9 @@ public class UserDTO implements Serializable {
     private String encryptedPassword;
     private String userId;
     private String token;
+// For email verification, used for preventing user from login until they verify email
     private String emailVerificationToken;
+// For email verification, used for preventing user from login until they verify email
     private Boolean emailVerificationStatus;
 
     /**

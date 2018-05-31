@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.BeanUtils;
 
+import com.price.finance_recorder_rest.common.CmnDef;
 import com.price.finance_recorder_rest.namebinding.Secured;
 import com.price.finance_recorder_rest.service.UserDTO;
 import com.price.finance_recorder_rest.service.UserService;
@@ -68,7 +69,7 @@ public class UserEntryPoint
         
         return returnValue;
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<UserRsp> getUsers(@DefaultValue("0") @QueryParam("start") int start, 
@@ -89,50 +90,48 @@ public class UserEntryPoint
         return returnValue;
     }
     
-//    @PUT
-//    @Path("/{id}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public UserRsp updateUserDetails(@PathParam("id") String id,
-//            UpdateUserRequestModel userDetails) {
-//        
-//        UserService userService = new UserServiceImpl();
-//        UserDTO storedUserDetails = userService.getUser(id);
-//        
-//         // Set only those fields you would like to be updated with this request
-//        if(userDetails.getFirstName() !=null && !userDetails.getFirstName().isEmpty())
-//        {
-//            storedUserDetails.setFirstName(userDetails.getFirstName());  
-//        }
-//        storedUserDetails.setLastName(userDetails.getLastName());
-//        
-//        // Update User Details
-//        userService.updateUserDetails(storedUserDetails);
-//        
-//        // Prepare return value 
-//        UserRsp returnValue = new UserRsp();
-//        BeanUtils.copyProperties(storedUserDetails, returnValue);
-//
-//
-//        return returnValue;
-// }
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public UserRsp updateUserDetails(@PathParam("id") String id, UpdateUserReq userDetails) {
+        
+        UserService userService = new UserServiceImpl();
+        UserDTO storedUserDetails = userService.getUser(id);
+        
+         // Set only those fields you would like to be updated with this request
+        if(userDetails.getFirstName() !=null && !userDetails.getFirstName().isEmpty())
+        {
+            storedUserDetails.setFirstName(userDetails.getFirstName());  
+        }
+        storedUserDetails.setLastName(userDetails.getLastName());
+        
+        // Update User Details
+        userService.updateUserDetails(storedUserDetails);
+        
+        // Prepare return value 
+        UserRsp returnValue = new UserRsp();
+        BeanUtils.copyProperties(storedUserDetails, returnValue);
 
-////    @Secured
-//    @DELETE
-//    @Path("/{id}")
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public DeleteUserProfileResponseModel deleteUserProfile(@PathParam("id") String id) {
-//        DeleteUserProfileResponseModel returnValue = new DeleteUserProfileResponseModel();
-//        returnValue.setRequestOperation(RequestOperation.DELETE);
-//        
-//        UsersService userService = new UsersServiceImpl();
-//        UserDTO storedUserDetails = userService.getUser(id);
-// 
-//        userService.deleteUser(storedUserDetails);
-//
-//        returnValue.setResponseStatus(ResponseStatus.SUCCESS);
-// 
-//        return returnValue;
-//    }
+        return returnValue;
+    }
+
+    @Secured
+    @DELETE
+    @Path("/{id}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public DeleteUserRsp deleteUserProfile(@PathParam("id") String id) {
+        DeleteUserRsp returnValue = new DeleteUserRsp();
+        returnValue.setRequestOperation(CmnDef.RequestOperation.DELETE);
+        
+        UserService userService = new UserServiceImpl();
+        UserDTO storedUserDetails = userService.getUser(id);
+ 
+        userService.deleteUser(storedUserDetails);
+
+        returnValue.setResponseStatus(CmnDef.ResponseStatus.SUCCESS);
+ 
+        return returnValue;
+    }
 
 }

@@ -2,6 +2,7 @@ package com.price.finance_recorder_rest.exception;
 
 public class EmailVerificationException extends RuntimeException {
 
+	// For email verification, used for preventing user from login until they verify email
 	/**
 	 * 
 	 */

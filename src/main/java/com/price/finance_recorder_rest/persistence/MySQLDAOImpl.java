@@ -170,6 +170,7 @@ public class MySQLDAOImpl implements MySQLDAO{
         session.getTransaction().commit();
 	}
 
+// For email verification, used for preventing user from login until they verify email
 	@Override
 	public UserDTO getUserByEmailToken(String token) {
 	    CriteriaBuilder cb = session.getCriteriaBuilder();

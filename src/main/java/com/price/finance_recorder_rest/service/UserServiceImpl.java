@@ -3,11 +3,7 @@ package com.price.finance_recorder_rest.service;
 import java.util.List;
 
 import com.price.finance_recorder_rest.common.UserProfileUtils;
-import com.price.finance_recorder_rest.exception.CouldNotCreateRecordException;
-import com.price.finance_recorder_rest.exception.CouldNotUpdateRecordException;
-import com.price.finance_recorder_rest.exception.EmailVerificationException;
-import com.price.finance_recorder_rest.exception.ExceptionType;
-import com.price.finance_recorder_rest.exception.NoRecordFoundException;
+import com.price.finance_recorder_rest.exception.*;
 import com.price.finance_recorder_rest.persistence.MySQLDAO;
 import com.price.finance_recorder_rest.persistence.MySQLDAOImpl;
 
@@ -154,26 +150,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UserDTO userDto) {
-//        try {
-//            this.database.openConnection();
-//            this.database.deleteUser(userDto);
-//        } catch (Exception ex) {
-//            throw new CouldNotDeleteRecordException(ex.getMessage());
-//        } finally {
-//            this.database.closeConnection();
-//        }
-//
-//        // Verify that user is deleted
-//        try {
-//            userDto = getUser(userDto.getUserId());
-//        } catch (NoRecordFoundException ex) {
-//            userDto = null;
-//        }
-//
-//        if (userDto != null) {
-//            throw new CouldNotDeleteRecordException(
-//                    ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
-//        }
+        try {
+            this.database.openConnection();
+            this.database.deleteUser(userDto);
+        } catch (Exception ex) {
+            throw new CouldNotDeleteRecordException(ex.getMessage());
+        } finally {
+            this.database.closeConnection();
+        }
+
+        // Verify that user is deleted
+        try {
+            userDto = getUser(userDto.getUserId());
+        } catch (NoRecordFoundException ex) {
+            userDto = null;
+        }
+
+        if (userDto != null) {
+            throw new CouldNotDeleteRecordException(
+                    ExceptionType.COULD_NOT_DELETE_RECORD.getExceptionMessage());
+        }
     }
 
     @Override

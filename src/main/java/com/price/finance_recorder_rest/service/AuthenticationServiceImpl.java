@@ -36,6 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AuthenticationException(ExceptionType.AUTHENTICATION_FAILED.getExceptionMessage());
         }
         
+// For email verification, used for preventing user from login until they verify email        
 //        if(!storedUser.getEmailVerificationStatus())
 //        {
 //            throw new EmailVerificationException(ExceptionType.EMAIL_ADDRESS_NOT_VERIFIED.getExceptionMessage());
